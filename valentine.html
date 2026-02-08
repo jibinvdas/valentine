@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A Special Question ❤️</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        .container {
+            text-align: center;
+            color: white;
+            z-index: 10;
+            padding: 20px;
+        }
+
+        h1 {
+            font-size: 3em;
+            margin-bottom: 30px;
+            animation: fadeInDown 1s ease;
+        }
+
+        .question {
+            font-size: 2em;
+            margin: 40px 0;
+            animation: fadeIn 2s ease 1s both;
+        }
+
+        .buttons {
+            margin-top: 50px;
+            animation: fadeIn 2s ease 2s both;
+        }
+
+        button {
+            font-size: 1.5em;
+            padding: 15px 40px;
+            margin: 0 15px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: bold;
+        }
+
+        .yes-btn {
+            background: #ff6b6b;
+            color: white;
+        }
+
+        .yes-btn:hover {
+            background: #ff5252;
+            transform: scale(1.1);
+        }
+
+        .no-btn {
+            background: #ddd;
+            color: #333;
+            position: relative;
+        }
+
+        .no-btn:hover {
+            background: #ccc;
+        }
+
+        .heart {
+            position: absolute;
+            color: #ff6b6b;
+            font-size: 30px;
+            opacity: 0;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .celebration {
+            display: none;
+            font-size: 2.5em;
+            animation: fadeIn 1s ease;
+        }
+
+        .emoji {
+            font-size: 1.2em;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Hey Beautiful! <span class="emoji">💕</span></h1>
+        <div class="question">
+            Will you be my Valentine? <span class="emoji">🌹</span>
+        </div>
+        <div class="buttons">
+            <button class="yes-btn" onclick="yesClicked()">Yes! 💖</button>
+            <button class="no-btn" id="noBtn" onmouseover="moveButton()">No</button>
+        </div>
+        <div class="celebration" id="celebration">
+            <p>🎉 You've made me the happiest! 🎉</p>
+            <p>I love you! ❤️❤️❤️</p>
+        </div>
+    </div>
+
+    <script>
+        // Create floating hearts
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.className = 'heart';
+            heart.innerHTML = '❤️';
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDelay = Math.random() * 2 + 's';
+            document.body.appendChild(heart);
+
+            setTimeout(() => {
+                heart.remove();
+            }, 3000);
+        }
+
+        setInterval(createHeart, 300);
+
+        // Make "No" button run away
+        function moveButton() {
+            const noBtn = document.getElementById('noBtn');
+            const maxX = window.innerWidth - noBtn.offsetWidth;
+            const maxY = window.innerHeight - noBtn.offsetHeight;
+            
+            const randomX = Math.random() * maxX;
+            const randomY = Math.random() * maxY;
+            
+            noBtn.style.position = 'absolute';
+            noBtn.style.left = randomX + 'px';
+            noBtn.style.top = randomY + 'px';
+        }
+
+        // Handle "Yes" click
+        function yesClicked() {
+            document.querySelector('.question').style.display = 'none';
+            document.querySelector('.buttons').style.display = 'none';
+            document.getElementById('celebration').style.display = 'block';
+            
+            // Create confetti effect
+            for(let i = 0; i < 50; i++) {
+                setTimeout(createHeart, i * 100);
+            }
+        }
+    </script>
+</body>
+</html>
