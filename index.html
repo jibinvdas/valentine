@@ -48,7 +48,7 @@
         button {
             font-size: 1.5em;
             padding: 15px 40px;
-            margin: 0 15px;
+            margin: 0 30px; /* Increased from 15px to 30px */
             border: none;
             border-radius: 50px;
             cursor: pointer;
@@ -136,7 +136,7 @@
         </div>
         <div class="buttons">
             <button class="yes-btn" onclick="yesClicked()">Yes! 💖</button>
-            <button class="no-btn" id="noBtn" onmouseover="moveButton()">No</button>
+            <button class="no-btn" id="noBtn" onmouseover="moveButton()" ontouchstart="moveButton()" onclick="moveButton()">No</button>
         </div>
         <div class="celebration" id="celebration">
             <p>🎉 You've made me the happiest, Chachu! 🎉</p>
@@ -167,16 +167,23 @@
         // Make "No" button run away
         function moveButton() {
             const noBtn = document.getElementById('noBtn');
-            const maxX = window.innerWidth - noBtn.offsetWidth;
-            const maxY = window.innerHeight - noBtn.offsetHeight;
+            const maxX = window.innerWidth - noBtn.offsetWidth - 20;
+            const maxY = window.innerHeight - noBtn.offsetHeight - 20;
             
-            const randomX = Math.random() * maxX;
-            const randomY = Math.random() * maxY;
+            const randomX = Math.max(20, Math.random() * maxX);
+            const randomY = Math.max(20, Math.random() * maxY);
             
-            noBtn.style.position = 'absolute';
+            noBtn.style.position = 'fixed'; /* Changed to fixed for better mobile support */
             noBtn.style.left = randomX + 'px';
             noBtn.style.top = randomY + 'px';
+            noBtn.style.zIndex = '1000';
         }
+
+        // Prevent default touch behavior on No button
+        document.getElementById('noBtn').addEventListener('touchstart', function(e) {
+            e.preventDefault();
+            moveButton();
+        }, { passive: false });
 
         // Handle "Yes" click
         function yesClicked() {
@@ -193,4 +200,3 @@
 </body>
 
 </html>
-
